@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>demo1</title>
+    </head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <body>
+        hello d3
+        <svg id="demo1" width="600" height="300" style="background:lightgray"></svg>
+        <script>
+            function makedemo1(){
+                d3.tsv("examples-simple.tsv")
+                    .then(function(data){
+                        d3.select("svg")
+                            .selectAll("circle")
+                            .data(data)
+                            .enter()
+                            .append("circle")
+                            .attr("r",5).attr("fill","red")
+                            .attr("cx",function(d){ return d["x"]})
+                            .attr("cy",function(d){ return d["y"]});
+                    })
+            }
+            makedemo1();
+        </script>
+    </body>
+</html>
+
