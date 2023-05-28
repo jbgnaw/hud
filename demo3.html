@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>demo2</title>
+    </head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <body>
+        
+        <svg id="demo3" width="600" height="300" style="background:lightgray"></svg>
+        <script>
+            function makedemo3(){
+                var width = 400;//SVG繪製區域的寬度
+                var height = 400;//SVG繪製區域的⾼度
+                var svg = d3.select("body")//選擇<body>
+                .append("svg")//在<body>中新增<svg>
+                .attr("width", width)//設定<svg>的寬度屬性
+                .attr("height", height);
+                svg.append("circle")
+                    .attr("cx","50px")
+                    .attr("cy","50px") //設定屬性cy的值為50px
+                    .attr("r", "50px") //設定屬性r的值為50px
+                    .attr("fill","red");//設定屬性fill的值為red      
+                  
+            }
+            makedemo3();
+        </script>
+    </body>
+</html>
+
