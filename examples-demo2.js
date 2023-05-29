@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <script src="d3.js"></script>
-</head>
-
-<body>
-  <svg id="demo2" width="600" height="300" style="background: lightgrey"></svg>
-  <script>
-    function makeDemo2() {
+function makeDemo2() {
     d3.tsv( "examples-multiple.tsv" )
         .then( function( data ) {
             var pxX = 600, pxY = 300;                             //<1>
@@ -59,8 +49,3 @@
 //          d3.select( "#ds2" ).attr( "fill", "red" );            //<23>
         } );
 }
-
-  </script>  
-  <script>makeDemo2();</script>
-</body>
-</html>
