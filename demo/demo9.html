@@ -7,77 +7,60 @@
     <style type="text/css"></style>
   </head>
   <body>
+    <svg width="960" height="600"></svg>
     <script>
-      var width = 600;
-      var height = 600;
-      var padding = { top: 20, right: 20, bottom: 20, left: 20 };
-      var dataset = [50, 43, 120, 87, 99, 167, 142];
-      var rectStep = 35;
-      var rectWidth = 30;
-      var svg = d3
-        .select("body")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-      var xScale = d3
-        .scaleLinear()
-        .domain([0, dataset.length])
-        .range([0, 250]);
-      var xAxis = d3
-        .axisBottom(xScale) //定义一个axis，由bottom可知，是朝下的
-        .ticks(7);
-
-      svg
+      var marge = { top: 60, bottom: 60, left: 60, right: 60 };
+      var svg = d3.select("svg"); //得到SVG画布
+      var width = svg.attr("width"); //得到画布的宽
+      var height = svg.attr("height"); //得到画布的长
+      var g = svg
         .append("g")
-        .attr(
-          "transform",
-          "translate(" + padding.left + "," + (height - padding.bottom) + ")"
-        )
-        .call(xAxis);
-
+        .attr("transform", "translate(" + marge.top + "," + marge.left + ")");
+      var dataset = [10, 20, 30, 23, 13, 40, 27, 35, 20];
+      var xScale = d3
+        .scaleBand()
+        .domain(d3.range(dataset.length))
+        .rangeRound([0, width - marge.left - marge.right]);
+      var xAxis = d3.axisBottom(xScale);
       var yScale = d3
         .scaleLinear()
         .domain([0, d3.max(dataset)])
-        .range([0, 250]);
-      
-
-      var rect = svg
-        .selectAll("rect")
-        .data(dataset) //绑定数据
-        .enter() //获取enter部分
-        .append("rect") //添加rect元素，使其与绑定数组的长度一致
-        .attr("fill", "steelblue") //设置颜色为steelblue
+        .range([height - marge.top - marge.bottom, 0]);
+      var yAxis = d3.axisLeft(yScale);
+      var gs = g.selectAll(".rect").data(dataset).enter().append("g");
+      var rectPadding = 20; //矩形之间的间隙
+      gs.append("rect")
         .attr("x", function (d, i) {
-          return padding.left + (i+1) * rectStep-rectStep/2;
+          return xScale(i) + rectPadding / 2;
         })
         .attr("y", function (d) {
-          return height - padding.bottom - d;
+          return yScale(d);
         })
-        .attr("width", rectWidth)
-
+        .attr("width", function () {
+          return xScale.step() - rectPadding;
+        })
         .attr("height", function (d) {
-          return d;
-        });
-      var text = svg
-        .selectAll("text")
-        .data(dataset) //绑定数据
-        .enter() //获取enter部分
-        .append("text") //添加text元素，使其与绑定数组的长度一致
-        .attr("fill", "white")
-        .attr("font-size", "14px")
-        .attr("text-anchor", "middle")
+          return height - marge.top - marge.bottom - yScale(d);
+        })
+        .attr("fill", "blue");
+
+      gs.append("text")
         .attr("x", function (d, i) {
-          return padding.left + i * rectStep;
+          return xScale(i) + rectPadding / 2;
         })
         .attr("y", function (d) {
-          return height - padding.bottom - d;
+          return yScale(d);
         })
-        .attr("dx", rectWidth / 2)
-        .attr("dy", "1em")
+        .attr("dx", function () {
+          (xScale.step() - rectPadding) / 2;
+        })
+        .attr("dy", 20)
+        .attr("fill", "white")
         .text(function (d) {
           return d;
         });
-        
+      gs.append("g").call(xAxis);
+      gs.append("g").call(yAxis);
     </script>
   </body>
 </html>
