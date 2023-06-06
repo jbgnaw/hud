@@ -29,6 +29,7 @@
       var yAxis = d3.axisLeft(yScale);
       var gs = g.selectAll(".rect").data(dataset).enter().append("g");
       var rectPadding = 20; //矩形之间的间隙
+      var rectHeight = 30;
       gs.append("rect")
         .attr("x", function (d, i) {
           return xScale(i) + rectPadding / 2;
@@ -59,7 +60,12 @@
         .text(function (d) {
           return d;
         });
-      gs.append("g").call(xAxis);
+      gs.append("g")
+        .attr(
+          "transform",
+          "translate(" +0 + "," + (height - marge.top - marge.bottom) + ")"
+        )
+        .call(xAxis);
       gs.append("g").call(yAxis);
     </script>
   </body>
