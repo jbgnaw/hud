@@ -21,7 +21,7 @@
         .attr("height", height);
       var xScale = d3
         .scaleLinear()
-        .domain([0, d3.max(dataset)])
+        .domain([0, dataset.length])
         .range([0, 250]);
       var xAxis = d3
         .axisBottom(xScale) //定义一个axis，由bottom可知，是朝下的
@@ -31,7 +31,7 @@
         .append("g")
         .attr(
           "transform",
-          "translate(" + rectWidth + "," + (height - padding.bottom) + ")"
+          "translate(" + padding.left + "," + (height - padding.bottom) + ")"
         )
         .call(xAxis);
 
@@ -48,7 +48,7 @@
         .append("rect") //添加rect元素，使其与绑定数组的长度一致
         .attr("fill", "steelblue") //设置颜色为steelblue
         .attr("x", function (d, i) {
-          return padding.left + i * rectStep;
+          return padding.left + (i+1) * rectStep-rectStep/2;
         })
         .attr("y", function (d) {
           return height - padding.bottom - d;
