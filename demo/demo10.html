@@ -14,7 +14,7 @@
         .attr("width", 600)
         .attr("height", 600);
 
-      var dataset = [10, 20, 30, 23, 13, 40, 27, 35, 20];
+      var dataset = [10, 20, 30];
       var g = svg.append("g");
 
       const scaleX = d3
@@ -24,11 +24,11 @@
       const scaleY = d3
         .scaleLinear()
         .domain([0, d3.max(dataset)])
-        .range([0, 250]);
+        .range([250, 0]);
 
-      const axisX = d3.axisBottom(scaleX);
+      const axisX = d3.axisBottom(scaleX).ticks(5);
       //const axisY = d3.axisTop(scaleY);
-      const axisY = d3.axisLeft(scaleY);
+      const axisY = d3.axisLeft(scaleY).ticks(5);
       //const axis4 = d3.axisRight(scale);
 
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
@@ -41,18 +41,22 @@
         .append("rect")
         .attr("x", function (d, i) {
           //设置左上点的y
-          return 400+i * 30;
+          return 400+scaleX(i);
         }) //设置左上点的x
-        .attr("y", function (d, i) {
-          //设置左上点的y
-          return 350;
+        .attr("y", function (d) {
+          return 350-scaleY(d);
         })
+        
+        //
         .attr("width", function (d) {
           //设置宽
-          return d;
+          return 20;
         })
-        .attr("height", 30 - 5) //设置长
-        .attr("fill", "blue"); //颜色填充
+        .attr("height", function (d) {
+          //设置宽
+          return d;
+        }) //设置长
+        .attr("fill", "steelblue"); //颜色填充
     </script>
   </body>
 </html>
