@@ -8,24 +8,51 @@
   </head>
   <body>
     <script>
-      var dataset = [10, 20, 30, 23, 13, 40, 27, 35, 20];
       const svg = d3
         .select("body")
         .append("svg")
         .attr("width", 600)
         .attr("height", 600);
-      const scaleX = d3.scaleLinear().domain([0, dataset.length]).range([0, 250]);
-      const scaleY = d3.scaleLinear().domain([0, d3.max(dataset)]).range([0, 250]);
+
+      var dataset = [10, 20, 30, 23, 13, 40, 27, 35, 20];
+      var g = svg.append("g");
+
+      const scaleX = d3
+        .scaleLinear()
+        .domain([0, dataset.length])
+        .range([0, 250]);
+      const scaleY = d3
+        .scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([0, 250]);
 
       const axisX = d3.axisBottom(scaleX);
       //const axisY = d3.axisTop(scaleY);
       const axisY = d3.axisLeft(scaleY);
       //const axis4 = d3.axisRight(scale);
-      
+
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
       svg.append("g").attr("transform", "translate(400,100)").call(axisY);
       //svg.append("g").attr("transform", "translate(350,50)").call(axis3);
       //svg.append("g").attr("transform", "translate(400,50)").call(axis4); */
+      g.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i) {
+          //设置左上点的y
+          return 400+i * 30;
+        }) //设置左上点的x
+        .attr("y", function (d, i) {
+          //设置左上点的y
+          return 350;
+        })
+        .attr("width", function (d) {
+          //设置宽
+          return d;
+        })
+        .attr("height", 30 - 5) //设置长
+        .attr("fill", "blue"); //颜色填充
     </script>
   </body>
 </html>
