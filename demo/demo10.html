@@ -23,7 +23,7 @@
         .range([0, 250]);
       const scaleY = d3
         .scaleLinear()
-        .domain([0, d3.max(dataset)])
+        .domain([d3.max(dataset),0])
         .range([250, 0]);
 
       const axisX = d3.axisBottom(scaleX).ticks(5);
@@ -41,7 +41,7 @@
         .append("rect")
         .attr("x", function (d, i) {
           //设置左上点的y
-          return 400+scaleX(i);
+          return 400+scaleX(i)-10;
         }) //设置左上点的x
         .attr("y", function (d) {
           return 350-scaleY(d);
@@ -54,7 +54,7 @@
         })
         .attr("height", function (d) {
           //设置宽
-          return d;
+          return scaleY(d);
         }) //设置长
         .attr("fill", "steelblue"); //颜色填充
     </script>
