@@ -28,7 +28,7 @@
         .range([350, 0])
         .nice();
 
-      const axisX = d3.axisBottom(scaleX).ticks(5);
+      const axisX = d3.axisBottom(scaleX).ticks(dataset.length);
       //const axisY = d3.axisTop(scaleY);
       const axisY = d3.axisLeft(scaleY).ticks(5);
       //const axis4 = d3.axisRight(scale);
