@@ -30,7 +30,7 @@
 
       const axisX = d3.axisBottom(scaleX).ticks(dataset.length);
       //const axisY = d3.axisTop(scaleY);
-      const axisY = d3.axisLeft(scaleY).ticks(d3.max(dataset)/5);
+      const axisY = d3.axisLeft(scaleY).ticks(5);
       //const axis4 = d3.axisRight(scale);
 
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
