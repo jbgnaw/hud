@@ -11,7 +11,40 @@
         .append("svf")
         .attr("width", 800)
         .attr("height", 600);
-        
+      var dataset = [
+        [1, 224],
+        [2, 528],
+        [3, 756],
+        [4, 632],
+        [5, 582],
+        [6, 704],
+        [7, 766],
+        [8, 804],
+        [9, 884],
+        [10, 960],
+        [11, 1095],
+        [12, 1250],
+      ];
+      var g = svg.append("g");
+      const scaleX = d3
+        .scaleLinear()
+        .domain([0, dataset.length])
+        .range([0, 250])
+        .nice();
+      const scaleY = d3
+        .scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([350, 0])
+        .nice();
+
+      const axisX = d3.axisBottom(scaleX).ticks(dataset.length);
+      //const axisY = d3.axisTop(scaleY);
+      const axisY = d3.axisLeft(scaleY).ticks(5);
+      //const axis4 = d3.axisRight(scale);
+
+      svg.append("g").attr("transform", "translate(400,350)").call(axisX);
+      svg.append("g").attr("transform", "translate(400,0)").call(axisY);
+      
     </script>
   </body>
 </html>
