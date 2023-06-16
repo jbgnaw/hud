@@ -54,6 +54,33 @@
 
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
       svg.append("g").attr("transform", "translate(400,0)").call(axisY);
+      var linePath = d3
+        .line()
+        .x(function (d) {
+          return scaleX(d[0]);
+        })
+        .y(function (d) {
+          return scaleY(d[1]);
+        });
+      svg
+        .append("g")
+        .append("path")
+        .attr("transform", "translate(" + 400 + "," + 0 + ")")
+        .attr("d", linePath(dataset))
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("stroke", "green");
+      svg
+        .append("g")
+        .selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("transform", function (d) {
+          return "translate(" + (400+scaleX(d[0])) + "," + scaleY(d[1]) + ")";
+        })
+        .attr("fill", "green");
     </script>
   </body>
 </html>
