@@ -8,7 +8,7 @@
     <script>
       const svg = d3
         .select("body")
-        .append("svf")
+        .append("svg")
         .attr("width", 800)
         .attr("height", 600);
       var dataset = [
@@ -25,26 +25,35 @@
         [11, 1095],
         [12, 1250],
       ];
+      var Datamin = d3.min(dataset, function (d) {
+        return d[1];
+      });
+      var Datamax = d3.max(dataset, function (d) {
+        return d[1];
+      });
+      //console.log("Datamax=", Datamax);
+      //console.log("Datamin=", Datamin);
+
       var g = svg.append("g");
+
       const scaleX = d3
         .scaleLinear()
-        .domain([0, dataset.length])
+        .domain([1, dataset.length])
         .range([0, 250])
         .nice();
       const scaleY = d3
         .scaleLinear()
-        .domain([0, d3.max(dataset)])
+        .domain([0, Datamax])
         .range([350, 0])
         .nice();
 
-      const axisX = d3.axisBottom(scaleX).ticks(dataset.length);
+      const axisX = d3.axisBottom(scaleX);
       //const axisY = d3.axisTop(scaleY);
-      const axisY = d3.axisLeft(scaleY).ticks(5);
+      const axisY = d3.axisLeft(scaleY);
       //const axis4 = d3.axisRight(scale);
 
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
       svg.append("g").attr("transform", "translate(400,0)").call(axisY);
-      
     </script>
   </body>
 </html>
