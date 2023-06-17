@@ -6,11 +6,14 @@
   </head>
   <body>
     <script>
+      //SVG area
       const svg = d3
         .select("body")
         .append("svg")
         .attr("width", 800)
         .attr("height", 600);
+
+      //Data  
       var dataset = [
         [1, 224],
         [2, 528],
@@ -36,6 +39,7 @@
 
       var g = svg.append("g");
 
+      //Scale
       const scaleX = d3
         .scaleLinear()
         .domain([1, dataset.length])
@@ -51,22 +55,29 @@
       //const axisY = d3.axisTop(scaleY);
       const axisY = d3.axisLeft(scaleY);
       //const axis4 = d3.axisRight(scale);
-      svg.append("text")      
-        .attr("x", (400+250/2)  )
-        .attr("y", (350+30))
+
+      //Axis Label
+      svg
+        .append("text")
+        .attr("x", 400 + 250 / 2)
+        .attr("y", 350 + 30)
         .style("text-anchor", "middle")
         .text("X label");
 
-      svg.append("text")
+      svg
+        .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y",400-50)
-        .attr("x",-(250/2))
+        .attr("y", 400 - 50)
+        .attr("x", -(250 / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("Y label");
 
+      //Plot Axis
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
       svg.append("g").attr("transform", "translate(400,0)").call(axisY);
+
+      //Plot Line
       var linePath = d3
         .line()
         .x(function (d) {
@@ -83,6 +94,8 @@
         .attr("fill", "none")
         .attr("stroke-width", 1)
         .attr("stroke", "green");
+
+      //Plot point
       svg
         .append("g")
         .selectAll("circle")
@@ -91,7 +104,7 @@
         .append("circle")
         .attr("r", 5)
         .attr("transform", function (d) {
-          return "translate(" + (400+scaleX(d[0])) + "," + scaleY(d[1]) + ")";
+          return "translate(" + (400 + scaleX(d[0])) + "," + scaleY(d[1]) + ")";
         })
         .attr("fill", "green");
     </script>
