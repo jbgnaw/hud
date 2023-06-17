@@ -51,6 +51,19 @@
       //const axisY = d3.axisTop(scaleY);
       const axisY = d3.axisLeft(scaleY);
       //const axis4 = d3.axisRight(scale);
+      svg.append("text")      
+        .attr("x", (400+250/2)  )
+        .attr("y", (350+30))
+        .style("text-anchor", "middle")
+        .text("X label");
+
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y",400-50)
+        .attr("x",-(250/2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Y label");
 
       svg.append("g").attr("transform", "translate(400,350)").call(axisX);
       svg.append("g").attr("transform", "translate(400,0)").call(axisY);
