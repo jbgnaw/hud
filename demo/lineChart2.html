@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>lineChart</title>
+    <script type="text/javascript" src="d3.js"></script>
+    <style type="text/css"></style>
+  </head>
+  <body>
+    <script>
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 600);
+      var dataset1 = [
+        [1, 224],
+        [2, 528],
+        [3, 756],
+        [4, 632],
+        [5, 582],
+        [6, 704],
+        [7, 766],
+        [8, 804],
+        [9, 884],
+        [10, 960],
+        [11, 1095],
+        [12, 1250],
+      ];
+      var dataset2 = [
+        [1, 300],
+        [2, 400],
+        [3, 750],
+        [4, 800],
+        [5, 850],
+        [6, 880],
+        [7, 200],
+        [8, 250],
+        [9, 400],
+        [10, 550],
+        [11, 1195],
+        [12, 1050],
+      ];
+      var Datamin1 = d3.min(dataset1, function (d) {
+        return d[1];
+      });
+      var Datamax1 = d3.max(dataset1, function (d) {
+        return d[1];
+      });
+      var Datamin2 = d3.min(dataset2, function (d) {
+        return d[1];
+      });
+      var Datamax2 = d3.max(dataset2, function (d) {
+        return d[1];
+      });
+      //console.log("Datamax=", Datamax);
+      //console.log("Datamin=", Datamin);
+
+      var g = svg.append("g");
+
+      const scaleX1 = d3
+        .scaleLinear()
+        .domain([1, dataset1.length])
+        .range([0, 250])
+        .nice();
+      const scaleY1 = d3
+        .scaleLinear()
+        .domain([0, Datamax1])
+        .range([350, 0])
+        .nice();
+
+      const scaleX2 = d3
+        .scaleLinear()
+        .domain([1, dataset2.length])
+        .range([0, 250])
+        .nice();
+      const scaleY2 = d3
+        .scaleLinear()
+        .domain([0, Datamax2])
+        .range([350, 0])
+        .nice();
+
+      const axisX1 = d3.axisBottom(scaleX1);
+      //const axisY = d3.axisTop(scaleY);
+      const axisY1 = d3.axisLeft(scaleY1);
+      const axisY2 = d3.axisRight(scaleY2);
+
+      svg.append("g").attr("transform", "translate(400,350)").call(axisX1);
+      svg.append("g").attr("transform", "translate(400,0)").call(axisY1);
+      svg.append("g").attr("transform", "translate(650,0)").call(axisY2);
+      var linePath1 = d3
+        .line()
+        .x(function (d) {
+          return scaleX1(d[0]);
+        })
+        .y(function (d) {
+          return scaleY1(d[1]);
+        });
+        var linePath2 = d3
+        .line()
+        .x(function (d) {
+          return scaleX2(d[0]);
+        })
+        .y(function (d) {
+          return scaleY2(d[1]);
+        });
+      svg
+        .append("g")
+        .append("path")
+        .attr("transform", "translate(" + 400 + "," + 0 + ")")
+        .attr("d", linePath1(dataset1))
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("stroke", "green");
+        svg
+        .append("g")
+        .append("path")
+        .attr("transform", "translate(" + 400 + "," + 0 + ")")
+        .attr("d", linePath2(dataset2))
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("stroke", "red");
+      svg
+        .append("g")
+        .selectAll("circle")
+        .data(dataset1)
+        .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("transform", function (d) {
+          return "translate(" + (400+scaleX1(d[0])) + "," + scaleY1(d[1]) + ")";
+        })
+        .attr("fill", "green");
+        svg
+        .append("g")
+        .selectAll("circle")
+        .data(dataset2)
+        .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("transform", function (d) {
+          return "translate(" + (400+scaleX2(d[0])) + "," + scaleY2(d[1]) + ")";
+        })
+        .attr("fill", "red");
+    </script>
+  </body>
+</html>
