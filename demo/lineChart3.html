@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <title>lineChart3</title>
+    <script type="text/javascript" src="d3.js"></script>
+    <style type="text/css"></style>
+  </head>
+  <body>
+    <script>
+      //SVG area
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 600);
+
+      //Data
+      var dataset = [
+        [1, 224],
+        [2, 528],
+        [3, 756],
+        [4, 632],
+        [5, 582],
+        [6, 704],
+        [7, 766],
+        [8, 804],
+        [9, 884],
+        [10, 960],
+        [11, 1095],
+        [12, 1250],
+      ];
+      var Datamin = d3.min(dataset, function (d) {
+        return d[1];
+      });
+      var Datamax = d3.max(dataset, function (d) {
+        return d[1];
+      });
+      //console.log("Datamax=", Datamax);
+      //console.log("Datamin=", Datamin);
+
+      var g = svg.append("g");
+
+      //Scale
+      const scaleX = d3
+        .scaleLinear()
+        .domain([1, dataset.length])
+        .range([0, 250])
+        .nice();
+      const scaleY = d3
+        .scaleLinear()
+        .domain([0, Datamax])
+        .range([350, 0])
+        .nice();
+
+      //Axis
+      const axisX = d3.axisBottom(scaleX);
+      //const axisY = d3.axisTop(scaleY);
+      const axisY = d3.axisLeft(scaleY);
+      //const axis4 = d3.axisRight(scale);
+
+      //Axis Label
+      svg
+        .append("text")
+        .attr("x", 400 + 250 / 2)
+        .attr("y", 350 + 30)
+        .style("text-anchor", "middle")
+        .text("X label");
+
+      svg
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 400 - 50)
+        .attr("x", -(250 / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Y label");
+
+      //Plot Axis
+      svg.append("g").attr("transform", "translate(400,350)").call(axisX);
+      svg.append("g").attr("transform", "translate(400,0)").call(axisY);
+
+      //Plot Line
+      var linePath = d3
+        .line()
+        .x(function (d) {
+          return scaleX(d[0]);
+        })
+        .y(function (d) {
+          return scaleY(d[1]);
+        });
+      svg
+        .append("g")
+        .append("path")
+        .attr("transform", "translate(" + 400 + "," + 0 + ")")
+        .attr("d", linePath(dataset))
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("stroke", "green");
+
+      //Plot point
+      svg
+        .append("g")
+        .selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("transform", function (d) {
+          return "translate(" + (400 + scaleX(d[0])) + "," + scaleY(d[1]) + ")";
+        })
+        .attr("fill", "green");
+
+     
+    </script>
+    <div>
+     
+    </div>
+  </body>
+</html>
